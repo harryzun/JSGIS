@@ -1,0 +1,30 @@
+html, body {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	overflow: hidden;
+	background: rgba(0, 0, 0, 0.75);
+	box-shadow: 4px 4px 4px black;
+	cursor: default;
+	-webkit-user-select: none;
+}
+
+body {
+	font-family: -apple-system, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+* {
+	-webkit-font-smoothing: antialiased;
+}
+
+#splash-image {
+	pointer-events: none;
+}
+
+#splash-text {
+	position: absolute;
+	left: 25px;
+	top: 105px;
+	color: gray;
+	font-size: 10pt;
+}
