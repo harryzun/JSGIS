@@ -1,0 +1,14 @@
+{
+  "name": "JSGIS",
+  "version": "0.1.0",
+  "description": "JSGIS application built with Electron",
+  "author": {
+    "name": "Harrison Hanssen",
+    "email": ""
+  },
+  "license": "MIT",
+  "main": "javascripts/main/index.js",
+  "dependencies": {
+
+  }
+}
