@@ -1,4 +1,67 @@
-require('bozon/lib/tasks');
+require('bozon/lib/tasks')
+
+const bozon		= require('bozon/lib/bozon')
+const babel		= require('gulp-babel')
+const flatten	= require('gulp-flatten')
+const flatmap	= require('gulp-flatmap')
+const webpack	= bozon.requireLocal('webpack-stream')
+const path		= require('path')
+const sass		= require('gulp-sass')
+
+bozon.task('scripts:main', function () {
+	return bozon.src('javascripts/main/**/*.js')
+		.pipe(babel({
+			presets: ['es2015']
+		}))
+		.pipe(bozon.dest('javascripts/main'))
+})
+
+bozon.task('scripts:renderer', function () {
+	return bozon.src('javascripts/renderer/**/*.js')
+		.pipe(flatten())
+		.pipe(flatmap(function(stream, file) {
+			return stream
+				.pipe(webpack({
+					target: 'electron',
+					module: {
+						loaders: [{
+							test: /\.js$/,
+							exclude: /node_modules/,
+							loader: 'babel',
+							query: {
+								presets: ['es2015']
+							}
+						}]
+					},
+					output: {
+						filename: path.basename(file.path)
+					}
+				}))
+		}))
+		.pipe(bozon.dest('javascripts/renderer'))
+})
+
+bozon.task('styles', function () {
+	return bozon.src('stylesheets/**/*.css')
+		.pipe(sass.sync({
+			outputStyle: 'compressed',
+			precision: 10
+		})
+		.on('error', sass.logError))
+		.pipe(flatten())
+		.pipe(bozon.dest('stylesheets'))
+})
+
+bozon.buildTaskAfter('styles', 'styles:sass', function() {
+	return bozon.src('stylesheets/**/*.scss')
+		.pipe(sass.sync({
+			outputStyle: 'compressed',
+			precision: 10
+		})
+		.on('error', sass.logError))
+		.pipe(flatten())
+		.pipe(bozon.dest('stylesheets'))
+})
 
 //== Bozon tasks =============================================================================
 //
