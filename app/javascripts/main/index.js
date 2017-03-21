@@ -1,32 +1,16 @@
-var electron, path, json;
+import { app } from 'electron'
+import splash from './splash'
+import about from './about'
+import Point from './Point'
 
-path = require('path');
-json = require('../../package.json');
+app.on('ready', () => {
+//	splash().then((splashWindow) => {
+//		console.log('CLOSED');
+//		about()
+//	})
+	about()
 
-electron = require('electron');
-
-electron.app.on('ready', function() {
-  var window;
-
-  window = new electron.BrowserWindow({
-    title: json.name,
-    width: json.settings.width,
-    height: json.settings.height
-  });
-
-  window.loadURL('file://' + path.join(__dirname, '..', '..') + '/index.html');
-
-  window.webContents.on('did-finish-load', function(){
-    window.webContents.send('loaded', {
-      appName: json.name,
-      electronVersion: process.versions.electron,
-      nodeVersion: process.versions.node,
-      chromiumVersion: process.versions.chrome
-    });
-  });
-
-  window.on('closed', function() {
-    window = null;
-  });
-
-});
+	let p1 = new Point(9, 9)
+	let p2 = new Point(0, 0)
+	console.log(p1.distance(p2))
+})
