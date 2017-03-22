@@ -1,25 +1,42 @@
-class Point {
+import { $_, BaseClass, defineClassVars } from './class-polyfill'
+
+defineClassVars({
+	public: {
+		foo: {
+			static: true,
+			value: 'PointClass'
+		}
+	},
+	private: {
+		x:			null,
+		y:			null,
+		name:		null,
+		visited:	false
+	}
+})
+
+class Point extends BaseClass {
 	constructor(x, y, name = 'Unnamed Point') {
-		this._x = x
-		this._y = y
-		this._name = name
-		this._visited = false
+		super()
+		$_(this).x = x
+		$_(this).y = y
+		$_(this).name = name
 	}
 
 	get x() {
-		return this._x
+		return $_(this).x
 	}
 
 	set x(x) {
-		this._x = x
+		$_(this).x = x
 	}
 
 	get y() {
-		return this._y
+		return $_(this).y
 	}
 
 	set y(y) {
-		this._y = y
+		$_(this).y = y
 	}
 	
 	get name() {
@@ -27,7 +44,7 @@ class Point {
 	}
 
 	set name(name) {
-		this._name = name
+		$_(this).name = name
 	}
 	
 	isVisited() {
@@ -35,21 +52,21 @@ class Point {
 	}
 
 	setVisited(visited) {
-		this._visited = visited
+		$_(this).visited = visited
 	}
 
 	toString() {
-		return '('+_x+', '+_y+')'
+		return '('+$_(this).x+', '+$_(this).y+')'
 	}
 
 	// Distance by coordinate
 	distance(x, y) {
-		return Math.sqrt(Math.pow(this._x-x, 2) + Math.pow(this._y-y, 2))
+		return Math.sqrt(Math.pow($_(this).x-x, 2) + Math.pow($_(this).y-y, 2))
 	}
 
 	// Distance by point
 	distance(p) {
-		return Math.sqrt(Math.pow(this._x-p.x, 2) + Math.pow(this._y-p.y, 2))
+		return Math.sqrt(Math.pow($_(this).x-p.x, 2) + Math.pow($_(this).y-p.y, 2))
 	}
 }
 
