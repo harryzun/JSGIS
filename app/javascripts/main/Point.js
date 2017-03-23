@@ -64,6 +64,4 @@ class Point extends BaseClass {
 	}
 }
 
-extendable(Point)
-
-export { Point as default }
+export default extendable(Point)

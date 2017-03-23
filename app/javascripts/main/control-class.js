@@ -153,6 +153,7 @@ export default (vars, superClass = false) => {
 	// Must be called before extending BaseClass's subclass
 	function extendable(SuperClass) {
 		extendData.set(SuperClass, Object.assign({}, extendVars))
+		return SuperClass
 	}
 
 	defineClassVars(vars)
