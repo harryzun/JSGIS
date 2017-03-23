@@ -2,7 +2,6 @@ import path from 'path'
 import url from 'url'
 import { BrowserWindow } from 'electron'
 import json from '../../package.json'
-import sleep from './sleep'
 
 function init() {
 	return new Promise((resolve, reject) => {
