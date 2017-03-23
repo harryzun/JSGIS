@@ -1,23 +1,64 @@
-import { app } from 'electron'
+import { app, ipcMain, Menu } from 'electron'
 import splash from './splash'
+import main from './main'
+import inspector from './inspector'
 import about from './about'
 import Point from './point'
-import PointBuffer from './point-buffer'
 import Polyline from './polyline'
-import Test from './test'
 
 app.on('ready', () => {
-//	splash().then((splashWindow) => {
-//		console.log('CLOSED');
-//		about()
-//	})
-//	about()
-
-	let p1 = new Point(0, 0)
-	let p2 = new Point(0, 5)
-	let pb = new PointBuffer(p1, 4)
-	console.log(pb.isInside(p2))
+	const template = [
+		{
+			label: 'JSGIS',
+			submenu: [
+				{
+					label: 'About',
+					click: () => {
+						about()
+					}
+				}
+			]
+		},
+		{
+			label: 'Edit',
+			submenu: [
+				{
+					label: 'Clear Polyline',
+					click: () => {
+						pl.clearPoints()
+						mainWindow.webContents.send('clear-polyline', true)
+						if (inspectorWindow) inspectorWindow.webContents.send('new-data', JSON.stringify(pl.toGeneric(), null, 4))
+					}
+				}
+			]
+		},
+		{
+			label: 'View',
+			submenu: [
+				{
+					label: 'View Polyline Data',
+					click: () => {
+						inspectorWindow = inspector(JSON.stringify(pl.toGeneric(), null, 4))
+					}
+				}
+			]
+		}
+	]
 	
-	let t = new Test()
-	console.log(t.foo)
+	const menu = Menu.buildFromTemplate(template)
+
+	let pl = new Polyline()
+	let inspectorWindow = null
+	let mainWindow
+
+	ipcMain.on('new-point', (event, { x, y }) => {
+		let p = new Point(x, y)
+		pl.addPoint(p)
+		if (inspectorWindow) inspectorWindow.webContents.send('new-data', JSON.stringify(pl.toGeneric(), null, 4))
+	})
+
+	splash().then((splashWindow) => {
+		Menu.setApplicationMenu(menu)
+		mainWindow = main()
+	})
 })

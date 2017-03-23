@@ -1,9 +1,6 @@
 import controlClass from './control-class'
 
 let { $_, BaseClass, extendable } = new controlClass({
-	public: {
-		foo: 'bar'
-	},
 	private: {
 		points: [],
 		nearRadius: 10
@@ -49,6 +46,29 @@ class Polyline extends BaseClass {
 		return $_(this).points.length
 	}
 	
+	// Removes all points in polyline
+	clearPoints() {
+		$_(this).points = []
+	}
+	
+	// Converts polyine to string
+	toString() {
+		let strings = []
+		for (let point of $_(this).points) {
+			strings.push(point.toString())
+		}
+		return 'POLYLINE ['+strings.join(', ')+']'
+	}
+	
+	// Converts polyine to generic object
+	toGeneric() {
+		let points = []
+		for (let point of $_(this).points) {
+			points.push(point.toGeneric())
+		}
+		return Object.assign({}, points)
+	}
+	
 	// Returns length of polyline
 	getLength() {
 		let distance = 0
@@ -60,27 +80,6 @@ class Polyline extends BaseClass {
 		}
 		return distance
 	}
-	
-//	// Draws polyline
-//	public void draw(Graphics g) {
-//		Iterator<Point> pointIterator = points.iterator();
-//    	g.setColor(Color.BLUE);
-//		if (pointIterator.hasNext()) {
-//			Point lastP = pointIterator.next();
-//			g.fillOval((int) lastP.getX() - 3, (int) lastP.getY() - 3, 6, 6);
-//			while (pointIterator.hasNext()) {
-//				Point p = pointIterator.next();
-//				g.fillOval((int) p.getX() - 3, (int) p.getY() - 3, 6, 6);
-//				g.drawLine(
-//					(int) lastP.getX(), 
-//					(int) lastP.getY(), 
-//					(int) p.getX(), 
-//					(int) p.getY()
-//				);
-//				lastP = p;
-//			}
-//		}
-//	}
 	
 	// Check point is near
 	isNear(checkPoint) {

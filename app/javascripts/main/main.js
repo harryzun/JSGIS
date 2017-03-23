@@ -6,16 +6,14 @@ import json from '../../package.json'
 function init() {
 	let mainWindow = new BrowserWindow({
 		title: json.name,
-		width: 456,
-		height: 270,
+		width: 699,
+		height: 446,
 		resizable: false,
-		minimizable: false,
 		maximizable: false,
 		fullscreenable: false,
-		alwaysOnTop: true,
 	})
 
-	mainWindow.setContentSize(456, 270) // addresses maxOS quirk
+	mainWindow.setContentSize(699, 446) // addresses maxOS quirk
 
 	mainWindow.loadURL(url.format({
 		pathname: path.join(__dirname, '..', '..', 'main.html'),
@@ -25,7 +23,6 @@ function init() {
 
 	mainWindow.on('closed', () => {
 		mainWindow = null
-		resolve()
 	})
 	
 	return mainWindow

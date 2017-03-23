@@ -34,7 +34,7 @@ class Point extends BaseClass {
 	}
 	
 	get name() {
-		return _name
+		return $_(this).name
 	}
 
 	set name(name) {
@@ -42,7 +42,7 @@ class Point extends BaseClass {
 	}
 	
 	isVisited() {
-		return _visited
+		return $_(this).visited
 	}
 
 	setVisited(visited) {
@@ -50,7 +50,12 @@ class Point extends BaseClass {
 	}
 
 	toString() {
-		return '('+$_(this).x+', '+$_(this).y+')'
+		return $_(this).name+'('+$_(this).x+', '+$_(this).y+')'
+	}
+	
+	toGeneric() {
+		let x = $_(this).x, y = $_(this).y
+		return { x, y }
 	}
 
 	// Distance by coordinate
