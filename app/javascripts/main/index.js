@@ -1,8 +1,8 @@
 import { app } from 'electron'
 import splash from './splash'
 import about from './about'
-import Point from './Point'
-import Test from './Test'
+import Point from './point'
+
 
 app.on('ready', () => {
 //	splash().then((splashWindow) => {
@@ -13,6 +13,4 @@ app.on('ready', () => {
 
 	let p1 = new Point(9, 9)
 	console.log(p1.toString())
-	console.log(Point.foo)
-	console.log(Test.foo)
 })
