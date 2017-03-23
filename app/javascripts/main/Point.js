@@ -1,26 +1,20 @@
-import { $_, BaseClass, defineClassVars } from './class-polyfill'
+import controlClass from './control-class'
 
-defineClassVars({
-	public: {
-		foo: {
-			static: true,
-			value: 'PointClass'
-		}
-	},
+let { $_, BaseClass, extendable } = new controlClass({
 	private: {
 		x:			null,
 		y:			null,
-		name:		null,
+		name:		'Unnamed Point',
 		visited:	false
 	}
 })
 
 class Point extends BaseClass {
-	constructor(x, y, name = 'Unnamed Point') {
+	constructor(x, y, name) {
 		super()
 		$_(this).x = x
 		$_(this).y = y
-		$_(this).name = name
+		if (name) $_(this).name = name
 	}
 
 	get x() {
@@ -69,5 +63,7 @@ class Point extends BaseClass {
 		return Math.sqrt(Math.pow($_(this).x-p.x, 2) + Math.pow($_(this).y-p.y, 2))
 	}
 }
+
+extendable(Point)
 
 export { Point as default }
