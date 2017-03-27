@@ -16,6 +16,12 @@ app.on('ready', () => {
 					click: () => {
 						about()
 					}
+				},
+				{
+					label: 'Quit',
+					click: () => {
+						app.quit()
+					}
 				}
 			]
 		},
@@ -61,4 +67,6 @@ app.on('ready', () => {
 		Menu.setApplicationMenu(menu)
 		mainWindow = main()
 	})
+	
+	app.on('window-all-closed', app.quit)
 })
